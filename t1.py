@@ -3,6 +3,11 @@
 #IMPORT ALL LIBRARIES
 import time
 import webbrowser as wb
+import datetime
+from bs4 import BeautifulSoup
+import urllib.request
+import sys
+import whois
 
 #PREPARING OPTION LIST(MENU)
 option_list = '''
@@ -26,6 +31,29 @@ def clean_data(ip_data):
 	final_data=stripped_data.split()#____Fetching individual words
 	return final_data
 
+#PLATFORM DETECTION
+def detect_platform():
+	platform=sys.platform
+	if platform == "linux":
+		print("Opening firefox!!")
+	elif platform == "darwin":
+		print("Opening safari!!")
+	elif plarform == "windows":
+		print("Opening internet explorer!!!")
+	else:
+		print ("Opening your default browser!!")
+
+#EXTRACTING REQUIRED INFORMATION FROM DETAILS OF DOMAIN FETCHED
+def domain_data_clean(domain_details):
+	domain_name_pos=domain_details.find("domain_name")
+	sq_pos=domain_details.find("[",domain_name_pos+1)
+	start_quote=domain_details.find('"',sq_pos+1)
+	end_quote=domain_details.find('"',start_quote+1)
+	#d_names=[]
+	#d_names.append(domain_details)
+	print (domain_details[start_quote:end_quote+1])
+
+
 #Switching the user choice
 if choice == '1':
 	#Cleaning & featching words
@@ -47,21 +75,41 @@ elif choice == '3':
 	print ("Under maintainene")
 
 elif choice == '4':
-	print ("Under maintainene")
+	#Printing current date & time
+	print ("Date : ",datetime.datetime.now().date())	
+	print ("Time : ",datetime.datetime.now().time())
 
 elif choice == '5':
-	print ("Under maintainene")
+	detect_platform()
+	wb.open("https://")	
 
 elif choice == '6':
 	print ("Under maintainene")
 
 elif choice == '7':
-	print ("Under maintainene")
+	domain_name=input("Enter domain name : ")
+	domain_details=whois.whois(domain_name)
+	print(domain_details)	
+	#domain_data_clean(domain_details)
 
 else:
 	#usr_ip=input("Enter the sentence : ")
 	#print(clean_data(usr_ip))
-	print ("Enter correct input !!!")
+	pri='''  "domain_name": [
+   	 "GOOGLE.COM",
+    	"google.com"
+ 	 ],
+  	"state": "CA",
+  	"expiration_date": [
+   	 "2020-09-14 04:00:00",
+    	"2020-09-13 21:00:00"
+ 	 ],
+ 	 "org": "Google LLC",
+  	"creation_date": [
+    	"1997-09-15 04:00:00"'''
+	print(pri.find("google"))
+	domain_data_clean(pri)
+	#print ("Enter correct input !!!")
 
 
 
