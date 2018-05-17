@@ -43,7 +43,9 @@ def detect_platform():
 	else:
 		print ("Opening your default browser!!")
 
+
 #EXTRACTING REQUIRED INFORMATION FROM DETAILS OF DOMAIN FETCHED
+'''
 def domain_data_clean(domain_details):
 	domain_name_pos=domain_details.find("domain_name")
 	sq_pos=domain_details.find("[",domain_name_pos+1)
@@ -52,7 +54,7 @@ def domain_data_clean(domain_details):
 	#d_names=[]
 	#d_names.append(domain_details)
 	print (domain_details[start_quote:end_quote+1])
-
+'''
 
 #Switching the user choice
 if choice == '1':
@@ -89,27 +91,29 @@ elif choice == '6':
 elif choice == '7':
 	domain_name=input("Enter domain name : ")
 	domain_details=whois.whois(domain_name)
-	print(domain_details)	
+	print ("Domain Name : ",domain_details.domain_name)	
+	print ("Emails : ",domain_details.emails)	
+	#print(domain_details)	
 	#domain_data_clean(domain_details)
 
 else:
 	#usr_ip=input("Enter the sentence : ")
 	#print(clean_data(usr_ip))
-	pri='''  "domain_name": [
-   	 "GOOGLE.COM",
-    	"google.com"
- 	 ],
-  	"state": "CA",
-  	"expiration_date": [
-   	 "2020-09-14 04:00:00",
-    	"2020-09-13 21:00:00"
- 	 ],
- 	 "org": "Google LLC",
-  	"creation_date": [
-    	"1997-09-15 04:00:00"'''
-	print(pri.find("google"))
-	domain_data_clean(pri)
-	#print ("Enter correct input !!!")
+	#pri='''  "domain_name": [
+   	# "GOOGLE.COM",
+    	#"google.com"
+ 	# ],
+  	#"state": "CA",
+  	#"expiration_date": [
+   	# "2020-09-14 04:00:00",
+    	#"2020-09-13 21:00:00"
+ 	# ],
+ 	# "org": "Google LLC",
+  	#"creation_date": [
+    	#"1997-09-15 04:00:00"'''
+	#print(pri.find("google"))
+	#domain_data_clean(pri)
+	print ("Enter correct input !!!")
 
 
 
