@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import sys
 import whois
+import requests
 
 #PREPARING OPTION LIST(MENU)
 option_list = '''
@@ -73,8 +74,58 @@ elif choice == '2':
 	for i in cleaned_data:
 		wb.open_new_tab("https://www.google.com/search?q="+i+"&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjg1ZK5mYjbAhVBzbwKHa-_CjcQ_AUICigB")
 
+##THIS OPTION IS BETA VERSION (BUILD YET TO RELEASE!!!)
+
 elif choice == '3':
-	print ("Under maintainene")
+	
+	usr_ip=input("Enter the sentence : ")
+	cleaned_data=clean_data(usr_ip)
+
+	#Searching individual word
+	for i in cleaned_data:
+		print("LINKS FOR ",i," : ")
+		print("")
+		#wb.open_new_tab("https://www.google.com/search?q="+i)
+		url_new="https://www.google.com/search?q="+i
+		page = requests.get(url_new)
+		html_source=page.text
+		
+		#constructing beautifulsoup constructer
+		soup=BeautifulSoup(html_source,'html.parser')
+		sorted_page=soup.prettify()
+
+		#FINDING LINKS
+		del_pos=[]
+
+		while sorted_page.find('<cite') >0:
+			cite_pos=sorted_page.find('<cite')
+			http_pos=sorted_page.find('http',cite_pos+1)
+			end_cite_pos=sorted_page.find('</cite>',http_pos+1)
+			link=sorted_page[http_pos:end_cite_pos]
+	
+			#TO REMOVE <B> TAGS INCLUDED IN link
+			new_link=link.split()
+			i=0	
+			len_list=len(new_link)
+			while i < len_list:
+				if new_link[i]=='<b>' or new_link[i]=='</b>':
+					del_pos.append(i)
+				i=i+1
+			del_pos.reverse()
+			for j in del_pos:
+				del new_link[j]
+			del del_pos[:]
+
+			#CREATING STRING FROM LIST
+			link_final=''
+			for i in new_link:
+				link_final=link_final+i		
+		
+			print(link_final)
+			print('')
+			#link_final=''
+			sorted_page=sorted_page[end_cite_pos+6:]
+
 
 elif choice == '4':
 	#Printing current date & time
@@ -93,26 +144,8 @@ elif choice == '7':
 	domain_details=whois.whois(domain_name)
 	print ("Domain Name : ",domain_details.domain_name)	
 	print ("Emails : ",domain_details.emails)	
-	#print(domain_details)	
-	#domain_data_clean(domain_details)
-
+	
 else:
-	#usr_ip=input("Enter the sentence : ")
-	#print(clean_data(usr_ip))
-	#pri='''  "domain_name": [
-   	# "GOOGLE.COM",
-    	#"google.com"
- 	# ],
-  	#"state": "CA",
-  	#"expiration_date": [
-   	# "2020-09-14 04:00:00",
-    	#"2020-09-13 21:00:00"
- 	# ],
- 	# "org": "Google LLC",
-  	#"creation_date": [
-    	#"1997-09-15 04:00:00"'''
-	#print(pri.find("google"))
-	#domain_data_clean(pri)
 	print ("Enter correct input !!!")
 
 
