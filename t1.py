@@ -9,6 +9,8 @@ import urllib.request
 import sys
 import whois
 import requests
+import os
+
 
 #PREPARING OPTION LIST(MENU)
 option_list = '''
@@ -74,6 +76,8 @@ elif choice == '2':
 	for i in cleaned_data:
 		wb.open_new_tab("https://www.google.com/search?q="+i+"&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjg1ZK5mYjbAhVBzbwKHa-_CjcQ_AUICigB")
 
+
+
 ##THIS OPTION IS BETA VERSION (BUILD YET TO RELEASE!!!)
 
 elif choice == '3':
@@ -137,7 +141,9 @@ elif choice == '5':
 	wb.open("https://")	
 
 elif choice == '6':
-	print ("Under maintainene")
+	
+	ip=os.system('sudo arp-scan --interface=wlp9s0 --localnet')	
+	print(ip)
 
 elif choice == '7':
 	domain_name=input("Enter domain name : ")
