@@ -4,6 +4,7 @@
 import socket
 import thread
 import netifaces as ni
+import base64
 
 
 #INITIALIZE SOCKET AND BIND IP WITH PORT
@@ -36,7 +37,8 @@ def send_msg():
 	s.sendto(my_name,(dest_ip,9999))##CHECK
 	while 1:
 		msg=raw_input(my_name+' : ')
-		s.sendto(msg,(dest_ip,9999))
+		encoded_msg=base64.b64encode(msg)		
+		s.sendto(encoded_msg,(dest_ip,9999))
 
 
 #FUNCTION TO RECEIVE THE MESSAGE
@@ -45,7 +47,8 @@ def receive_msg():
 	other_name=rec[0]       ##CHECK
 	while 1:
 		rec_data=s.recvfrom(1000)
-		print '\n'+other_name+' : '+rec_data[0]
+		decoded_msg=base64.b64decode(rec_data[0])
+		print '\n'+other_name+' : '+decoded_message
 
 #PROCESSING BOTH FUNCTIONS TOGETHER USING THREADS
 
