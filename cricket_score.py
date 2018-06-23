@@ -38,7 +38,7 @@ def get_score(good_data):
 	split_instance[0]=split_instance[0][:live]
 	check_discarded=copy_instance[live:]
 	
-	print('@@\n'+check_discarded+'\n@@\n')
+	#print('@@\n'+check_discarded+'\n@@\n')
 	'''
 	if len(check_discarded)>38:
 		while len(check_discarded)>38:
